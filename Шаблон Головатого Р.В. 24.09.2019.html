@@ -1,0 +1,243 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html" charset="windows-1251">
+
+		<style type="text/css">
+			body {
+				position: absolute;
+				left: 0.0cm;
+				top: 0.0cm;
+				width: auto;
+				height: auto;
+				margin: 0.5cm;
+				padding: 0.0cm;
+				text-align: center;
+				font-family: sans-serif;
+				font-size: 12px;
+				color: #000000;
+				background: #ffffff;
+			}
+			td 	{margin: 0px;     
+				padding-top: 1px;
+				padding-bottom: 1px;
+				padding-left: 1px;
+				padding-right: 1px;
+				border: ridge 2px #ffffff;
+				font-size: 12px;
+				border-radius: 5px;
+			}
+			td.Title {background: #696969;
+				text-align: center;
+				color: #ffffff; 
+				border-style: none; 
+				font-weight: bold;
+				font-size: 17px;
+				border-radius: 5px;
+				transition: all 1s;
+			}
+			th 	{
+				background: #ffffff;
+				color: #000000;
+			 	padding: 1px 1px;
+			 	text-align: center;
+			 	border: ridge 2px #696969;
+			 	font-size: 12px;
+			 	border-radius: 5px;
+			}
+			img	{
+				width:300px;
+				border-radius: 10px;
+				transition: all 0.5s;
+			}
+			.img1:hover{
+				transform: scale(4.5) translateX(-100px);
+			}
+			.img2:hover{
+				transform: scale(3) 
+			}
+			table {
+				border:ridge 2px #ffffff;
+				border-radius: 15px;
+			}
+			table.section {
+				width:1100px;
+			}
+			td.toolLabelCol {
+				width:100px;
+				border: none;
+				text-align:right;
+				}
+			td.toolValueCol {
+				width:125px;
+				border:ridge 2px #FFFFFF; 
+				text-align:right;
+				}
+			.Title:hover{
+				opacity: 0.5;
+				box-shadow: 5px -5px 5px #000000;
+			}
+			.white{
+				border:1px solid #ffffff;
+			}
+			th:hover{
+				border:solid 2px #FFFFFF;
+			}
+			td:hover{
+				color:red;
+			}
+		</style>
+		 
+		  	 <title>ЧАО "КЦКБА"</title>
+
+		  	 <link rel="shortcut icon" href="https://img.findtm.ru/img/tz_registered_img/17/174953.gif">
+
+		<script type="text/javascript" src="app.js"></script>
+		<script type="text/javascript" src="file://///Dataserv/users/dep46/!!!АРХИВ УП!!!/SetupSheet/app.js"></script>
+		<script type="text/javascript" src="file://///Dataserv/users/dep46/Бюро программного управления/SetupSheet/app.js"></script>
+		<script type="text/javascript" src="file://///Dataserv/users/dep46/Бюро программного управления/!!!!!!!!!!CNC!!!!!!!!!!/SetupSheet/app.js"></script>
+	 </head>
+	<body>
+		<table class="section">
+			<tr>
+				<td class="title">Деталь:<input maxlength="25" formnovalidate tabindex="1" value="{fm.file_name}"/></td>
+				<td class="title" style="text-align:center;"><input style="text-align:center;" maxlength="25" formnovalidate tabindex="2" value="Карта наладки"/></td>
+			</tr>
+			<tr>
+				<td>
+					<table>
+						<tr>
+							<th>Изделие</th>
+							<td><input maxlength="25" formnovalidate tabindex="3" value="{fm.title}"/></td>
+							<th>Организация</th>
+							<td><input maxlength="20" formnovalidate tabindex="4" value="{fm.company}"/></td>
+						</tr>
+						<tr>
+							<th>Програмист :</th>
+							<td> <input maxlength="25" formnovalidate tabindex="5" value="{fm.author}"/></td>
+							<th>No. детали/чертежа</th>
+							<td><input maxlength="20" formnovalidate tabindex="6" value="{fm.part_num}"/></td>
+						</tr>
+						<tr>
+							<th>Эскиз №</th>
+							<td><input maxlength="20" formnovalidate tabindex="7" value="{fm.note1}"/></td>
+							<th>Версия</th>
+							<td><input maxlength="20" formnovalidate tabindex="8" value="{fm.revision}"/></td>
+						</tr>
+						<tr>
+							<th>Станок</th>
+							<td><input maxlength="20" formnovalidate tabindex="9" value="{fm.note2}"/></td>
+							<th>Материал</th>
+							<td><input title="Обычно 08Х18Н10Т" maxlength="20" formnovalidate tabindex="10" value="{stock.material}"/></td>
+						</tr>
+						<tr>
+							<th colspan="2">Общее время</th>
+							<th colspan="2"><div id="tAll"></div></th>
+						</tr>
+					</table>
+				</td>
+				<td>
+					<table style="height:100%">
+						<tr>
+							<th>Коментарий</th>
+							<td style="text-align:left"> <textarea maxlength="280" rows="7" cols="40" tabindex="11" value="{fm.comments}"> </textarea> </td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table> 
+		<table class="section">
+			<tr>
+				<td class="title" colspan="7">Список инструмента</td>
+			</tr>
+			<tr>
+				<th>Номер ячейки (т)</th>
+				<if_multi_turret><th>Супорт</th></if_multi_turret>
+				<th>Имя инструмента</th>
+				<th>Диаметр инструмента</th>
+				<th>Вылет инструмента</th>
+				<th>Длина Режущей части*</th>
+				<th>Детали</th>
+				<th>Эскиз</th>
+			</tr>
+			<tool_loop>
+				<tr>
+					<td style="text-align:center">{tool.number}</td>
+					<if_multi_turret><td>{tool.turret_name}</td></if_multi_turret>
+					<td nowrap>{tool.name}</td>
+					<td style="text-align:center">{tool.diameter}</td>
+					<td style="text-align:center">{tool.exposed_length}</td>
+					<td style="text-align:center">{tool.length}</td>
+					<td width="120px" style="text-align:right"> 
+						<table class="white">
+							<tr class="white"> <td class="white">Замена охлаждения</td> <td class="white" style="text-align:right"><div class="coolant">{tool.coolant_override}</div></td> </tr>
+							<tr class="white"> <td class="white">Количество зубьев</td> <td class="white" style="text-align:right">{tool.flutes}{tool.teeth}</td> </tr>
+							<tr class="white"> <td class="white">Конус</td> <td class="white" style="text-align:right">{tool.taper}</td> </tr>
+							<tr class="white"> <td class="white">Радиус кромки</td> <td class="white" style="text-align:right">{tool.end_radius}</td> </tr>
+							<tr class="white"> <td class="white">Патрон</td> <td class="white" style="text-align:right">{tool.holder}</td> </tr>
+							<tr class="white"> <td nowrap class="white">Название_производителя:фреза<hr>пластина</td> <td title="?нструмент/замены/коментарии, заполнять следующим образом:Название фрезы<hr/>Название пластины" nowrap class="white" style="text-align:right">{tool.comment}</td> </tr>
+						</table></td>
+
+
+					<td><img class=img1 alt="Tool Image" style="width:150px" src="{tool.image_embed}"></td>
+				</tr>
+			</tool_loop>
+			<tr>
+				<td colspan="8">
+					*Длинна относительно держателя для бововых фрез, радиус для закругляющей фрезы, держателя для токарных станков (смотри ескиз в FeatureCAM), и длинна фрезы для всех остальных инструментов. 
+				</td>
+			</tr>
+		</table>
+		<table class="section">
+			<setup_loop>
+				<tr>
+					<td class="title" colspan="9">Установ : {setup.name}</td>
+				</tr>
+				<tr>
+					<td style="text-align:center" colspan="9"><img class=img2 alt="Setup Image" src="{setup.image_path}"></td>
+				</tr>
+				<tr>
+					<th>Имя операции</th>
+					<th>Тип операции</th>
+					<th>Операция</th>
+					<th>Номер<br>инструмента<br>(Т)</th>
+					<th>Имя<br>инструмента</th>
+					<if_multi_turret>
+						<th>инструмент<br>Супорт</th>
+					</if_multi_turret>
+					<th>Подача</th>
+					<th>Обороты</th>
+					<th>Время<br>Обработки</th>
+					<th>Коментарий</th>
+				</tr>
+				<operation_loop>
+					<tr>
+						<td>{operation.feature_name}</td>
+						<td>{operation.feature_type}</td>
+						<td>{operation.name}</td>
+						<td style="text-align:center">{operation.tool_number}</td>
+						<td>{operation.tool_name}</td>
+						<if_multi_turret>
+							<td style="text-align:center">{operation.turret_name}</td>
+						</if_multi_turret>
+						<td style="text-align:right">{operation.feed}</td>
+						<td style="text-align:right">{operation.speed}</td>
+						<td style="text-align:right">{operation.time}</td>
+						<td style="text-align:left"; style="word-wrap:break-word">{operation.comment}</td>
+					</tr>
+				</operation_loop>
+				<tr>
+					<th>Полное время установа :</th>
+					<td colspan="7"></td>
+					<th class="time" style="text-align:center;">{setup.total_time}</th>
+				</tr>
+			</setup_loop>	
+		</table>
+
+
+		<script> 
+			console.log(typeof(calcAllTimeInMin(document.querySelectorAll(".time"))))
+			document.getElementById("tAll").innerText=calcAllTimeInMin(document.querySelectorAll(".time"))
+		</script>
+
+	</body>
+</html>
